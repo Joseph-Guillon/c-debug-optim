@@ -33,31 +33,17 @@ Summary metrics_summary(const Dataset *ds)
     return out;
 }
 
-double metrics_pairwise_score(const Dataset *ds, int repeat)
-{
+double metrics_pairwise_score(const Dataset *ds, int repeat){
     size_t n = ds->n;
-    double total = 0.0;
-
-    double *work = (double *)malloc(n * sizeof(double));
-    if (!work)
-    {
-        fprintf(stderr, "malloc failed for work\n");
-        exit(1);
-    }
+    double total = 0.0; 
     for (size_t i = 0; i < n; ++i)
-        work[i] = ds->x[i] - ds->y[i];
-
-    for (int r = 0; r < repeat; ++r)
     {
-        for (size_t i = 0; i < n; ++i)
+        for (size_t j = 0; j < n; ++j)
         {
-            for (size_t j = 0; j < n; ++j)
-            {
-                double d = work[i] - work[j];
+                double d = ds->x[i]-ds->y[i] - (ds->x[j]-ds->y[j]);
                 total += sin(d) * d;
-            }
         }
     }
-    free(work);
+    total = total*repeat;
     return total / (double)(repeat * (double)n * (double)n);
 }
