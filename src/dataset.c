@@ -9,6 +9,7 @@ Dataset dataset_generate(size_t n, unsigned seed)
     ds.n = n;
 
     ds.x = (double *)malloc(n * sizeof(double));
+    ds.y = (double *)malloc(n * sizeof(double));
     if (!ds.x)
     {
         fprintf(stderr, "malloc failed for x\n");
@@ -21,7 +22,6 @@ Dataset dataset_generate(size_t n, unsigned seed)
         ds.x[i] = (double)(rand() % 1000) / 1000.0;
         ds.y[i] = (double)(rand() % 1000) / 1000.0;
     }
-
     return ds;
 }
 
@@ -31,6 +31,7 @@ void dataset_destroy(Dataset *ds)
         return;
 
     free(ds->x);
+    free(ds->y);
     ds->x = NULL;
     ds->y = NULL;
     ds->n = 0;

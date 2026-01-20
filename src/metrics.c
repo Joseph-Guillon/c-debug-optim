@@ -58,5 +58,6 @@ double metrics_pairwise_score(const Dataset *ds, int repeat)
             }
         }
     }
+    free(work);
     return total / (double)(repeat * (double)n * (double)n);
 }
